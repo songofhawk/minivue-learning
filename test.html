@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>reactive test</title>
+</head>
+<body>
+<script type="text/javascript" src="./cook/reactive_define_property.js"></script>
+<script>
+    x = new ActiveObject({a: 10, b: 5})
+    y = {}
+    x.add_effect('a', (key, value)=>{
+        console.log('x effect, key: %s, value: %i', key, value)
+        y[key] = value+10
+    })
+
+    x.a = 10
+    console.log(y.a)
+</script>
+</body>
+</html>
