@@ -1,11 +1,7 @@
-class ReactiveObjectPX {
+class ExtendableProxy{
     constructor(raw) {
         this.effects = new Map()
         let self = this
-        raw.add_effect = function (key, fun) {
-            let effect_set = self._get_effects(key)
-            effect_set.add(fun)
-        }
         return new Proxy(raw, {
             set(target, key, value) {
                 Reflect.set(target, key, value)
@@ -26,6 +22,11 @@ class ReactiveObjectPX {
         }
         return effect_set
     }
+}
 
-
+class ReactiveObjectPXExtend extends ExtendableProxy{
+    add_effect(key, fun) {
+        let effect_set = this._get_effects(key)
+        effect_set.add(fun)
+    }
 }

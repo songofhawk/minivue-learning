@@ -3,38 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <title>reactive test</title>
+    <style>
+        .button-big {
+            font-size: 1.5em;
+        }
+    </style>
 </head>
 <body>
 <h1>mini-vue learning</h1>
-<button onclick="testReactiveDP()">Test Reactive by Define Property</button>
-<button onclick="testReactivePX()">Test Reactive by Proxy</button>
+<button onclick="testReactiveDP()" class="button-big">Test Reactive by Define Property</button>
+<button onclick="testReactivePX()" class="button-big">Test Reactive by Proxy</button>
+<button onclick="testReactivePXArray()" class="button-big">Test Reactive Array by Proxy</button>
+<button onclick="testReactivePXExtend()" class="button-big">Test Reactive by extended Proxy</button>
 <p id="pResult"></p>
 <script type="text/javascript" src="./cook/reactive_define_property.js"></script>
+<script type="text/javascript" src="./cook/reactive_proxy.js"></script>
+<script type="text/javascript" src="./cook/reactive_proxy_extend.js"></script>
 <script>
-    function testReactiveDP(){
+    function testReactiveDP() {
         let x = new ReactiveObjectDP({a: 10, b: 5})
         let y = {}
-        x.add_effect('a', (key, value)=>{
+        x.add_effect('a', (key, value) => {
             console.log('x effect, key: %s, value: %i', key, value)
-            y[key] = value+10
+            y[key] = value + 10
         })
 
         x.a = 10
-        console.log(y.a)
+        console.log('x.a: %i', x.a)
+        console.log('y.a: %i', y.a)
     }
 
-    function testReactivePX(){
+    function testReactivePX() {
         let x = new ReactiveObjectPX({a: 10, b: 5})
         let y = {}
-        x.add_effect('a', (key, value)=>{
+        x.add_effect('a', (key, value) => {
             console.log('x effect, key: %s, value: %i', key, value)
-            y[key] = value+10
+            y[key] = value + 10
         })
 
         x.a = 10
-        console.log(y.a)
+        console.log('x.a: %i', x.a)
+        console.log('y.a: %i', y.a)
     }
 
+    function testReactivePXArray() {
+        let x = new ReactiveObjectPX([3,6,15])
+        let y = []
+        x.add_effect('3', (key, value) => {
+            console.log('x effect, key: %s, value: %i', key, value)
+            y.push(value + 10)
+        })
+
+        x.push(10)
+        console.log('x[0]: %i', x[0])
+        console.log('y[0]: %i', y[0])
+    }
+
+    function testReactivePXExtend() {
+        let x = new ExtendableProxy({a: 10, b: 5})
+        let y = {}
+        x.add_effect('a', (key, value) => {
+            console.log('x effect, key: %s, value: %i', key, value)
+            y[key] = value + 10
+        })
+
+        x.a = 10
+        console.log('x.a: %i', x.a)
+        console.log('y.a: %i', y.a)
+    }
 
 </script>
 </body>
