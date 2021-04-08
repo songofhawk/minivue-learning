@@ -1,24 +1,26 @@
-class ActiveObject{
-    constructor(raw){
+class ActiveObject {
+    constructor(raw) {
         this.raw = raw
         this.effects = new Map()
-        for (let key in raw){
+        let self = this
+        for (let key in raw) {
             Object.defineProperty(this, key,
                 {
-                    get:function () {
+                    get: function () {
                         return raw[key]
                     },
-                    set:function (value){
+                    set: function (value) {
                         raw[key] = value
-                        let effect_set = this._get_effects(key)
-                        effect_set.forEach(function (effect, index, array){
+                        let effects = self._get_effects(key)
+                        effects.forEach(function (effect) {
                             effect(key, value)
                         })
                     }
-            });
+                });
         }
     }
-    _get_effects(key){
+
+    _get_effects(key) {
         let effect_set = this.effects[key]
         if (effect_set == null) {
             effect_set = new Set()
@@ -27,7 +29,7 @@ class ActiveObject{
         return effect_set
     }
 
-    add_effect(key, fun){
+    add_effect(key, fun) {
         let effect_set = this._get_effects(key)
         effect_set.add(fun)
     }
