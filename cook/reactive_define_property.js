@@ -1,4 +1,4 @@
-class ActiveObject {
+class ReactiveObjectDP {
     constructor(raw) {
         this.raw = raw
         this.effects = new Map()

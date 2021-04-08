@@ -6,17 +6,36 @@
 </head>
 <body>
 <h1>mini-vue learning</h1>
+<button onclick="testReactiveDP()">Test Reactive by Define Property</button>
+<button onclick="testReactivePX()">Test Reactive by Proxy</button>
+<p id="pResult"></p>
 <script type="text/javascript" src="./cook/reactive_define_property.js"></script>
 <script>
-    x = new ActiveObject({a: 10, b: 5})
-    y = {}
-    x.add_effect('a', (key, value)=>{
-        console.log('x effect, key: %s, value: %i', key, value)
-        y[key] = value+10
-    })
+    function testReactiveDP(){
+        let x = new ReactiveObjectDP({a: 10, b: 5})
+        let y = {}
+        x.add_effect('a', (key, value)=>{
+            console.log('x effect, key: %s, value: %i', key, value)
+            y[key] = value+10
+        })
 
-    x.a = 10
-    console.log(y.a)
+        x.a = 10
+        console.log(y.a)
+    }
+
+    function testReactivePX(){
+        let x = new ReactiveObjectPX({a: 10, b: 5})
+        let y = {}
+        x.add_effect('a', (key, value)=>{
+            console.log('x effect, key: %s, value: %i', key, value)
+            y[key] = value+10
+        })
+
+        x.a = 10
+        console.log(y.a)
+    }
+
+
 </script>
 </body>
 </html>
