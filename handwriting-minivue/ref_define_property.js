@@ -7,7 +7,7 @@ class Dep {
         this._val = val
     }
     get value(){
-        dep.depend()
+        this.depend()
         return this._val
     }
     set value(newVal){
@@ -44,4 +44,3 @@ effectWatch(()=>{
 
 // 值发生变化
 dep.value = 20
-dep.notice()
