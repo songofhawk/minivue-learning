@@ -4,18 +4,24 @@
     <meta charset="UTF-8">
     <title>reactive test</title>
     <style>
-        .button-big {
+        .font-big {
             font-size: 1.5em;
         }
     </style>
 </head>
 <body>
 <h1>mini-vue learning</h1>
-<button onclick="testReactiveDP()" class="button-big">Test Reactive by Define Property</button>
-<button onclick="testReactivePX()" class="button-big">Test Reactive by Proxy</button>
-<button onclick="testReactivePXArray()" class="button-big">Test Reactive Array by Proxy</button>
-<button onclick="testReactivePXExtend()" class="button-big">Test Reactive by extended Proxy</button>
-<p id="pResult"></p>
+<button onclick="testReactiveDP()" class="font-big">Test Reactive by Define Property</button>
+<button onclick="testReactivePX()" class="font-big">Test Reactive by Proxy</button>
+<button onclick="testReactivePXArray()" class="font-big">Test Reactive Array by Proxy</button>
+<button onclick="testReactivePXExtend()" class="font-big">Test Reactive by extended Proxy</button>
+<p></p>
+<hr>
+<p></p>
+<label for="x-input" class="font-big">x.a:</label><input id="x-input" value="和平主义者" onchange="xchange(this)" class="font-big"/>
+<button onclick="testRender()" class="font-big">Test Render</button>
+<label for="x-shadow" class="font-big">x.a shadow:</label><input id="x-shadow" class="font-big"/>
+
 <script type="text/javascript" src="./cook/reactive_define_property.js"></script>
 <script type="text/javascript" src="./cook/reactive_proxy.js"></script>
 <script type="text/javascript" src="./cook/reactive_proxy_extend.js"></script>
@@ -55,8 +61,8 @@
         })
 
         x.push(10)
-        console.log('x[0]: %i', x[0])
-        console.log('y[0]: %i', y[0])
+        console.log('last x: %i', x[x.length - 1])
+        console.log('last y: %i', y[y.length - 1])
     }
 
     function testReactivePXExtend() {
@@ -71,6 +77,19 @@
         console.log('x.a: %i', x.a)
         console.log('y.a: %i', y.a)
     }
+
+    let dataX = new ReactiveObjectPX({a: document.getElementById('x-input').value})
+    function testRender() {
+        dataX.add_effect('a', (key, value) => {
+            console.log('dataX effect, key: %s, value: %i', key, value)
+            document.getElementById('x-shadow').value = '我是' + value+ '，哈哈哈'
+        })
+    }
+
+    function xchange(ele){
+        dataX.a = ele.value
+    }
+
 
 </script>
 </body>
